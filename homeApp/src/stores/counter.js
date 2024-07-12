@@ -51,7 +51,7 @@ export const useUserStore = defineStore('userStore', {
           password
         );
         this.userData = { email: user.email, uid: user.uid };
-        router.push("/about");
+        router.push("/home");
       } catch (error) {
         console.log(error);
       } finally {

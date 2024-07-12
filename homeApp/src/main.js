@@ -15,6 +15,7 @@ import Button from 'primevue/button'
 import Card from "primevue/card";
 import InputText from "primevue/inputtext";
 import Password from "primevue/password";
+import Toolbar from 'primevue/toolbar';
 
 import App from './App.vue'
 import router from './router'
@@ -45,5 +46,6 @@ app.component('InputText', InputText);
 app.component('Password', Password);
 app.component('IconField', IconField);
 app.component('InputIcon', InputIcon);
+app.component('Toolbar', Toolbar);
 
 app.mount('#app')
