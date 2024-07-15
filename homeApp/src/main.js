@@ -3,10 +3,7 @@ import 'primeicons/primeicons.css'
 import 'animate.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
-
-
-
+import {useUserStore} from "./stores/counter";
 
 
 //Block with prime components
@@ -27,8 +24,12 @@ import InputIcon from 'primevue/inputicon';
 
 const app = createApp(App)
 
+
+
 app.use(createPinia())
 app.use(router)
+const userStore = useUserStore()
+console.log(userStore.userData)
 app.use(PrimeVue, {
 	theme: {
 		preset: Aura,

@@ -8,25 +8,18 @@ import {
 } from "firebase/auth";
 import {auth} from '../firebase'
 import router from "../router";
-
-export const useCounterStore = defineStore('counter', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
-  }
-
-  return { count, doubleCount, increment }
-})
+import {db} from "../firebase";
+import { collection, addDoc, doc, getDoc, query, where, getDocs } from "firebase/firestore";
 
 export const useUserStore = defineStore('userStore', {
     state:() =>({
       userData: null,
       loadingUser: false,
       loadingSession: false,
+      isLoggedIn:false
     }),
   actions:{
-    async registerUser(email, password) {
+    async registerUser(email, password, name) {
       this.loadingUser = true;
       try {
         const { user } = await createUserWithEmailAndPassword(
@@ -35,7 +28,13 @@ export const useUserStore = defineStore('userStore', {
           password
         );
         this.userData = { email: user.email, uid: user.uid };
-        router.push('/');
+        let dataUpload = await addDoc(collection(db,'users'), {
+          email:user.email,
+          uid:user.uid,
+          name:name
+        })
+        console.log('Id ', dataUpload.id)
+        router.push('/home');
       } catch (error) {
         console.log(error);
       } finally {
@@ -52,20 +51,35 @@ export const useUserStore = defineStore('userStore', {
         );
         this.userData = { email: user.email, uid: user.uid };
         router.push("/home");
+        localStorage.token = user.accessToken
+        localStorage.uid =  user.uid
+
       } catch (error) {
         console.log(error);
       } finally {
         this.loadingUser = false;
+        this.isLoggedIn = true
       }
     },
     async logoutUser() {
       try {
         await signOut(auth);
         this.userData = null;
-        router.push("/login");
+        localStorage.clear()
+       router.push("/login");
       } catch (error) {
         console.log(error);
       }
+    },
+    async getUserInfo(uid){
+      const q = query(collection(db, "users"), where("uid", "==", uid));
+
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        this.userData = doc.data()
+      });
     },
     currentUser() {
       return new Promise((resolve, reject) => {

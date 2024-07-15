@@ -48,7 +48,7 @@
 				</template>
 				<template #footer>
 					<div style="display: flex;justify-content:center; margin-top: 5px;">
-						<Button severity="success" label="Ок"/>
+						<Button severity="success" label="Ок" @click="registerNewUser"/>
 						<Button style="margin-left: 5px;" severity="danger" label="Отменить" @click="changeCard"/>
 					</div>
 				</template>
@@ -101,6 +101,9 @@ export default {
 		...mapActions(useUserStore,['loginUser', 'registerUser']),
 		async loginInSystem(){
 			await this.loginUser(this.email, this.password)
+		},
+		async registerNewUser(){
+			await this.registerUser(this.registrationForm.email, this.registrationForm.password, this.registrationForm.name)
 		},
 		clickEye(){
 			this.eyeIcon = !this.eyeIcon
