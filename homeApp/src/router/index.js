@@ -22,6 +22,14 @@ const router = createRouter({
       },
       children:[
         {
+          path:'/home/profile',
+          name:'profile',
+          component:()=>import('../views/home/Profile.vue'),
+          meta:{
+            requiresAuth: true
+          }
+        },
+        {
           path: '/home/about',
           name: 'about',
           // route level code-splitting

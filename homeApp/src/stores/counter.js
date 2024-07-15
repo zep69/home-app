@@ -13,7 +13,10 @@ import { collection, addDoc, doc, getDoc, query, where, getDocs } from "firebase
 
 export const useUserStore = defineStore('userStore', {
     state:() =>({
-      userData: null,
+      userData: {
+        name:null,
+        email:null,
+      },
       loadingUser: false,
       loadingSession: false,
       isLoggedIn:false
