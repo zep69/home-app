@@ -5,7 +5,6 @@
 			<Button label="Дом" text severity="help" @click="$router.push('/home/about')"/>
 		</template>
 		<template #center>
-			<p>Привет, {{userData.name}}</p>
 		</template>
 		<template #end>
 			<Button icon="pi pi-sign-out" rounded outlined severity="danger" @click="logOut"/>
@@ -57,9 +56,9 @@ export default {
   background-color: var(--color-background-soft);
   border:none;
   border-radius: 15px ;
-  -webkit-box-shadow: -1px 9px 11px 0px var(--color-background-mute);
-  -moz-box-shadow: -1px 9px 11px 0px var(--color-background-mute);
-  box-shadow: -1px 9px 11px 0px var(--color-background-mute);
+  -webkit-box-shadow: -1px 9px 11px 0px var(--color-shadow);
+  -moz-box-shadow: -1px 9px 11px 0px var(--color-shadow);
+  box-shadow: -1px 9px 11px 0px var(--color-shadow);
 
 }
 </style>

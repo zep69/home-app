@@ -17,6 +17,11 @@ export const useUserStore = defineStore('userStore', {
         name:null,
         email:null,
       },
+      userFamily:{
+        kitchen:{},
+        bathroom:{},
+        name:null
+      },
       loadingUser: false,
       loadingSession: false,
       isLoggedIn:false
@@ -52,7 +57,7 @@ export const useUserStore = defineStore('userStore', {
           email,
           password
         );
-        this.userData = { email: user.email, uid: user.uid };
+        this.userData = { email: user.email, uid: user.uid, };
         router.push("/home");
         localStorage.token = user.accessToken
         localStorage.uid =  user.uid
@@ -82,7 +87,20 @@ export const useUserStore = defineStore('userStore', {
         // doc.data() is never undefined for query doc snapshots
         console.log(doc.id, " => ", doc.data());
         this.userData = doc.data()
+        console.log('Profile ', this.userData)
+        localStorage.family = this.userData.family
       });
+    },
+    async getUserFamily(){
+      console.log('Start 123')
+      const docRef = doc(db, "families", this.userData.family);
+      const docSnap = await getDoc(docRef);
+
+
+        this.userFamily = docSnap.data()
+        console.log('Family ', this.userFamily)
+
+
     },
     currentUser() {
       return new Promise((resolve, reject) => {
