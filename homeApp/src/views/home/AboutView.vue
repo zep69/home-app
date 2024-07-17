@@ -45,7 +45,7 @@
 				</div>
 			</template>
 		</Card>
-		<Dialog :modal="true" :draggable="false" v-model:visible="dialogAddItem" class="add-dialog">
+		<Dialog :modal="true" :draggable="false" v-model:visible="dialogAddItem" style="width: 380px" class="add-items-dialog">
 			<template #header>
 				<div v-if="typeToggle == 'bathroom'">
 					<h3>Добавить вещь в ванную</h3>
@@ -55,9 +55,9 @@
 				</div>
 			</template>
 
-				<div style="display:flex;justify-content: center; align-items:center ">
-					<InputText placeholder="Название" type="text" v-model="addItem.name"/>
-					<InputText placeholder="Кол-во" type="number" v-model="addItem.count"/>
+				<div style="display:flex;justify-content: center; align-items:center;">
+					<InputText placeholder="Название" type="text" style="width: 240px" v-model="addItem.name"/>
+					<InputText placeholder="Кол-во" type="number" style="width: 120px" v-model="addItem.count"/>
 				</div>
 
 				<div style="display:flex;align-items: center; justify-content:center;margin-top: 15px;">
@@ -149,11 +149,11 @@ export default {
 	-moz-box-shadow: -1px 9px 11px 0px var(--color-shadow);
 	box-shadow: -1px 9px 11px 0px var(--color-shadow);
 }
-.add-dialog{
+.add-items-dialog{
 	width:480px;
 }
 @media  screen and (max-width: 768px){
-	.add-dialog{
+	.add-items-dialog{
 		width:280px;
 	}
 }
