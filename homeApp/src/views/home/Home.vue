@@ -59,6 +59,10 @@ export default {
   -webkit-box-shadow: -1px 9px 11px 0px var(--color-shadow);
   -moz-box-shadow: -1px 9px 11px 0px var(--color-shadow);
   box-shadow: -1px 9px 11px 0px var(--color-shadow);
-
+}
+@media  screen and (max-width: 768px){
+	.main-view{
+		width: 420px;
+	}
 }
 </style>

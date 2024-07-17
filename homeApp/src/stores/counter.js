@@ -9,7 +9,7 @@ import {
 import {auth} from '../firebase'
 import router from "../router";
 import {db} from "../firebase";
-import { collection, addDoc, doc, getDoc, query, where, getDocs } from "firebase/firestore";
+import { collection, addDoc, doc, getDoc, query, where, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 
 export const useUserStore = defineStore('userStore', {
     state:() =>({
@@ -91,6 +91,12 @@ export const useUserStore = defineStore('userStore', {
         localStorage.family = this.userData.family
       });
     },
+    async getUserRealtimeFamily(){
+      const unsub = onSnapshot(doc(db, "families", this.userData.family), (doc) => {
+        console.log("Current data: ", doc.data());
+        this.userFamily = doc.data()
+      });
+    },
     async getUserFamily(){
       console.log('Start 123')
       const docRef = doc(db, "families", this.userData.family);
@@ -101,6 +107,15 @@ export const useUserStore = defineStore('userStore', {
         console.log('Family ', this.userFamily)
 
 
+    },
+    async updateFamily(){
+      const family = doc(db, "families", this.userData.family);
+
+// Set the "capital" field of the city 'DC'
+      await updateDoc(family, {
+        bathroom: this.userFamily.bathroom,
+        kitchen: this.userFamily.kitchen,
+      });
     },
     currentUser() {
       return new Promise((resolve, reject) => {
