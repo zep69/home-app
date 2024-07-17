@@ -3,6 +3,7 @@
 		<template #start>
 			<Button label="Профиль" text @click="$router.push('/home/profile')"/>
 			<Button label="Дом" text severity="help" @click="$router.push('/home/about')"/>
+			<Button label="Списки" text severity="info" @click="$router.push('/home/list')"/>
 		</template>
 		<template #center>
 		</template>
