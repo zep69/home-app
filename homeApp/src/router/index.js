@@ -14,7 +14,8 @@ const router = createRouter({
       component: ()=> import('../App.vue'),
       meta:{
         requiresAuth:true
-      }
+      },
+      redirect:'/home'
     },
     {
       path:'/login',
