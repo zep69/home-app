@@ -36,10 +36,10 @@ export default {
     }
   },
 	computed:{
-		...mapState(useUserStore, ['userData', 'loadingUser', 'loadingSession']),
+		...mapState(useUserStore, ['userData', 'loadingUser', 'loadingSession', 'userFamily']),
 	},
 	methods:{
-		...mapActions(useUserStore,['logoutUser', 'getUserInfo']),
+		...mapActions(useUserStore,['logoutUser', 'getUserInfo', 'getUserFamily']),
 		async logOut(){
 			await this.logoutUser()
 		}
@@ -47,6 +47,7 @@ export default {
 	async mounted(){
 		await this.getUserInfo(localStorage.uid)
 		console.log(this.userData)
+		await this.getUserFamily(this.userData.family)
 	}
 }
 </script>

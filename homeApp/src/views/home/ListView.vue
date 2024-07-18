@@ -29,6 +29,11 @@
 				</div>
 			</div>
 
+			<div style="display:flex;justify-content:center;margin-top: 15px">
+				<Button severity="success" label="Сохранить" @click="addListToLists"/>
+				<Button @click="deleteList" style="margin-left: 5px ;" severity="danger" label="Удалить"/>
+			</div>
+
 		</div>
 	</Dialog>
 	<div style="display:flex;justify-content:center;">
@@ -36,6 +41,18 @@
 	</div>
 	<div v-if="userFamily.lists.length == 0" style="display:flex;justify-content:center;">
 		<span>Списков пока что нет...</span>
+	</div>
+	<div v-else>
+		<div v-for="item in userFamily.lists" style="padding: 10px" >
+			<Fieldset :legend="item.name + returnDate(item.date)" :toggleable="true" :collapsed="true">
+				<div v-for="(i, index) in item.arr">
+					<div style="display:flex;">
+						<Checkbox v-model="i.status" :binary="true" @change="updateLists"/>
+						<span>{{i.name}}</span>
+					</div>
+				</div>
+			</Fieldset>
+		</div>
 	</div>
 </template>
 
@@ -61,14 +78,15 @@ export default {
 	},
 	async mounted(){
 		await this.getUserInfo(localStorage.uid)
-		//await this.getUserFamily(this.userData.family)
+		await this.getUserFamily(this.userData.family)
 		await this.getUserRealtimeFamily()
+		console.log(this.userFamily)
 	},
 	computed:{
 		...mapState(useUserStore, ['userData','userFamily'])
 	},
 	methods:{
-		...mapActions(useUserStore,['getUserInfo', 'getUserFamily','getUserRealtimeFamily', 'updateFamily']),
+		...mapActions(useUserStore,['getUserInfo', 'getUserFamily','getUserRealtimeFamily', 'updateFamily', 'updateLists']),
 		addItem(){
 			this.list.arr.push(this.newItem)
 			this.newItem={
@@ -76,6 +94,29 @@ export default {
 						status:false
 			}
 			this.statusNewItem = false
+		},
+		deleteList(){
+			this.dialogAdd = false
+			this.list = {
+				name:null,
+				date:new Date(),
+				arr:[]
+			}
+		},
+		returnDate(date){
+			let temp = new Date(date.seconds * 1000).toLocaleDateString().substr(0,10)
+			temp = ' от '+temp
+			return temp
+		},
+		async addListToLists(){
+			this.userFamily.lists.push(this.list)
+			await this.updateLists()
+			this.dialogAdd = false
+			this.list = {
+				name:null,
+				date:new Date(),
+				arr:[]
+			}
 		}
 	}
 }

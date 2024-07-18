@@ -15,6 +15,8 @@ import Password from "primevue/password";
 import Toolbar from 'primevue/toolbar';
 import Dialog from 'primevue/dialog';
 import Menu from 'primevue/menu';
+import Fieldset from 'primevue/fieldset';
+import Checkbox from 'primevue/checkbox';
 
 
 import App from './App.vue'
@@ -53,6 +55,8 @@ app.component('InputIcon', InputIcon);
 app.component('Toolbar', Toolbar);
 app.component('Dialog', Dialog);
 app.component('Menu', Menu);
+app.component('Fieldset', Fieldset);
+app.component('Checkbox', Checkbox);
 
 
 app.mount('#app')

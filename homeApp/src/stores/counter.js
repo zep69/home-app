@@ -117,6 +117,12 @@ export const useUserStore = defineStore('userStore', {
         kitchen: this.userFamily.kitchen,
       });
     },
+    async updateLists(){
+      const family = doc(db, "families", this.userData.family);
+      await updateDoc(family, {
+        lists:this.userFamily.lists
+      });
+    },
     currentUser() {
       return new Promise((resolve, reject) => {
         const unsuscribe = onAuthStateChanged(
